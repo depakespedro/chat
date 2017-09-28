@@ -6,11 +6,14 @@ use App\Contracts\MessageContract;
 use App\Message;
 use App\Repositories\MessageRepository;
 use App\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MessageRepositoryTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function testCheckRegisterRepository()
     {
         $messageRepository = app('message');

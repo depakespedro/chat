@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Contracts\MessageContract;
 use App\Repositories\MessageRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Message;
+use App\Observers\MessageObserver;
 
 class MessageServiceProvider extends ServiceProvider
 {
@@ -15,7 +17,7 @@ class MessageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Message::observe(MessageObserver::class);
     }
 
     /**

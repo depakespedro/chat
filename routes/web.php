@@ -11,4 +11,9 @@
 |
 */
 
-Route::resource('/message', 'MessageController');
+Route::get('/message/{text}', 'MessageController@store');
+Route::get('/message', 'MessageController@all');
+
+Route::get('/auth/login/{user}', 'AuthUserController@login');
+Route::get('/auth/logout', 'AuthUserController@logout');
+Route::get('/auth/register/{name}', 'AuthUserController@register');

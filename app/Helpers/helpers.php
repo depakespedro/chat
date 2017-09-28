@@ -7,3 +7,11 @@ if( ! function_exists('message') )
         return app('message');
     }
 }
+
+if( ! function_exists('user') )
+{
+    function user()
+    {
+        return app('user');
+    }
+}
