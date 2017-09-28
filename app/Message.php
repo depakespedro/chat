@@ -17,6 +17,8 @@ class Message extends Model
         'updated_at',
     ];
 
+    protected $with = [ 'user' ];
+
     public static function rules(){
         return [
             'text' => 'required|min:1',

@@ -12,7 +12,7 @@ class MessageController extends Controller
 
     public function all()
     {
-        dd(Message::all());
+        return Message::all()->take(500);
     }
 
     public function store(Request $request, Guard $guard, $text)
