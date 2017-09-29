@@ -1207,21 +1207,30 @@ var app = new Vue({
     },
 
     created: function created() {
+        var _this = this;
+
         this.updateMessages();
+
+        Echo.join('chat-room-1').listen('MessageCreated', function (e) {
+            _this.updateMessages();
+        }).here(function (users) {
+            console.log(users);
+        });
+
+        console.log('Echo init');
     },
 
 
     methods: {
         updateMessages: function updateMessages() {
-            var _this = this;
+            var _this2 = this;
 
             console.log('updateMEssages');
             axios.get('/messages').then(function (responce) {
-                _this.messages = responce.data;
+                _this2.messages = responce.data;
             });
         }
     }
-
 });
 
 /***/ }),

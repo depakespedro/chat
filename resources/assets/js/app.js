@@ -26,6 +26,16 @@ const app = new Vue({
 
     created(){
         this.updateMessages();
+
+        Echo.join('chat-room-1')
+            .listen('MessageCreated', (e) => {
+                this.updateMessages();
+            })
+            .here((users) => {
+                console.log(users);
+        });
+
+        console.log('Echo init');
     },
 
     methods:{
@@ -35,6 +45,5 @@ const app = new Vue({
                 this.messages = responce.data;
             });
         }
-    }
-
+    },
 });

@@ -20,3 +20,5 @@ Route::get('/auth/logout', 'AuthUserController@logout');
 Route::get('/auth/register/{name}', 'AuthUserController@register');
 
 Route::any('/event', 'AuthUserController@event');
+
+\Illuminate\Support\Facades\Auth::routes();

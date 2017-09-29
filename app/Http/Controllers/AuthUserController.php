@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageCreated;
+use App\Message;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,6 +44,11 @@ class AuthUserController extends Controller
 
     public function event(Request $request)
     {
+        $message = Message::create([
+            'user_id' => 1,
+            'text' => 1,
+        ]);
+        event(new MessageCreated($message));
         Log::info(print_r($request->all(), true));
     }
 }
