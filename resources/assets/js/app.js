@@ -15,9 +15,26 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
 Vue.component('listmessages', require('./components/ListMessages.vue'));
+Vue.component('createmessage', require('./components/CreateMessage.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data:{
+        messages:[]
+    },
+
+    created(){
+        this.updateMessages();
+    },
+
+    methods:{
+        updateMessages: function () {
+            console.log('updateMEssages');
+            axios.get('/messages').then(responce => {
+                this.messages = responce.data;
+            });
+        }
+    }
+
 });

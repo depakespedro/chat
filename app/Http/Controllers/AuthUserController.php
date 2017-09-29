@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthUserController extends Controller
 {
@@ -37,5 +38,10 @@ class AuthUserController extends Controller
         }else{
             return 'no logout';
         }
+    }
+
+    public function event(Request $request)
+    {
+        Log::info(print_r($request->all(), true));
     }
 }

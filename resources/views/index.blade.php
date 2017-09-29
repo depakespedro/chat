@@ -12,8 +12,10 @@
     </head>
     <body>
         <div id="app">
-            <listmessages></listmessages>
+            <listmessages :messages="messages"></listmessages>
+            <createmessage v-on:sendmessageevent="updateMessages"></createmessage>
         </div>
+
 
     </body>
 
