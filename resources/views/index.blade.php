@@ -13,8 +13,15 @@
     </head>
     <body>
         <div id="app">
-            <listmessages :messages="messages"></listmessages>
-            <createmessage v-on:sendmessageevent="updateMessages"></createmessage>
+            <table cellspacing="0">
+                <tr>
+                    <th><listmessages :messages="messages"></listmessages></th>
+                    <th><createmessage v-on:sendmessageevent="updateMessages"></createmessage></th>
+                    <th><listusersonline :users="usersOnline"></listusersonline></th>
+                    <th><login></login></th>
+                </tr>
+            </table>
+
         </div>
 
 

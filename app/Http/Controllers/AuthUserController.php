@@ -11,44 +11,41 @@ use Illuminate\Support\Facades\Log;
 
 class AuthUserController extends Controller
 {
-    public function register($name)
+    public function login($name)
     {
-        $user =  user()->create($name);
+        $user = User::where('name', '=', $name)->first();
 
-        $errors = $user->getErrors();
-
-        if(empty($errors)){
-            return $user;
+        if (is_null($user)) {
+            $user = user()->create($name);
         }
 
-        return $errors;
-    }
-
-    public function login(User $user)
-    {
-        if(user()->login($user)){
+        if (user()->login($user)) {
             return 'login';
-        }else{
+        } else {
             return 'no login';
         }
     }
 
     public function logout()
     {
-        if(user()->logout()){
+        if (user()->logout()) {
             return 'logout';
-        }else{
+        } else {
             return 'no logout';
         }
     }
 
     public function event(Request $request)
     {
-        $message = Message::create([
-            'user_id' => 1,
-            'text' => 1,
-        ]);
-        event(new MessageCreated($message));
-        Log::info(print_r($request->all(), true));
+
+        $events = $request->get('events');
+
+        $userId = $events[0]['user_id'];
+
+        $user = User::find($userId);
+
+        user()->logout($user);
+
+        return response('ok', 200);
     }
 }

@@ -7,6 +7,7 @@ use App\Contracts\UserContract;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Session as SessionModel;
 
 
 class UserRepository implements UserContract
@@ -43,16 +44,18 @@ class UserRepository implements UserContract
         return false;
     }
 
-    public function logout()
+    public function logout(User $user = null)
     {
         try{
-            $user = Auth::user();
-
             if(is_null($user)){
-                return false;
+                $user = Auth::user();
+
+                if(is_null($user)){
+                    return false;
+                }
             }
 
-            Auth::logout($user);
+            SessionModel::User($user)->delete();
             $user->offOnline();
             $user->updatedTimeOnline();
 

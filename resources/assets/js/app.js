@@ -17,11 +17,14 @@ window.Vue = require('vue');
 
 Vue.component('listmessages', require('./components/ListMessages.vue'));
 Vue.component('createmessage', require('./components/CreateMessage.vue'));
+Vue.component('listusersonline', require('./components/ListUsersOnline.vue'));
+Vue.component('login', require('./components/Login.vue'));
 
 const app = new Vue({
     el: '#app',
     data:{
-        messages:[]
+        messages:[],
+        usersOnline: []
     },
 
     created(){
@@ -32,8 +35,14 @@ const app = new Vue({
                 this.updateMessages();
             })
             .here((users) => {
-                console.log(users);
-        });
+                this.usersOnline = users;
+            })
+            .joining((user)=>{
+                this.usersOnline.push(user);
+            })
+            .leaving((user)=>{
+                this.usersOnline = this.usersOnline.filter(u => u != user);
+            });
 
         console.log('Echo init');
     },

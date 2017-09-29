@@ -12,13 +12,12 @@
 */
 Route::get('/', 'IndexController@index');
 
-Route::get('/message/{text}', 'MessageController@store');
+Route::get('/message/{text}', 'MessageController@store')->middleware('auth');
 Route::get('/messages', 'MessageController@all');
 
-Route::get('/auth/login/{user}', 'AuthUserController@login');
+Route::get('/auth/login/{name}', 'AuthUserController@login');
 Route::get('/auth/logout', 'AuthUserController@logout');
-Route::get('/auth/register/{name}', 'AuthUserController@register');
 
-Route::any('/event', 'AuthUserController@event');
+Route::post('/event', 'AuthUserController@event');
 
 \Illuminate\Support\Facades\Auth::routes();

@@ -9,5 +9,5 @@ interface UserContract
 
     public function login(User $user);
 
-    public function logout();
+    public function logout(User $user = null);
 }
