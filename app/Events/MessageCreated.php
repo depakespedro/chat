@@ -35,6 +35,6 @@ class MessageCreated implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat-room');
+        return new Channel('chat-room');
     }
 }

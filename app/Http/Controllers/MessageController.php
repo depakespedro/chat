@@ -12,7 +12,7 @@ class MessageController extends Controller
 
     public function all()
     {
-        return Message::all()->take(500);
+        return Message::orderBy('created_at', 'desc')->take(10)->get();
     }
 
     public function store(Request $request, Guard $guard, $text)

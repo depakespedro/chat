@@ -1,8 +1,10 @@
 <template>
     <div>
         <div v-for="message in messages">
-            <p>Сообщение: {{ message.text }}</p>
-            <small>Автор: {{ message.user.name }}</small>
+            <div class="p-3 mb-2 bg-info text-white">
+                <small>Автор: {{ message.user.name }}</small>
+                <p>{{ message.text }}</p>
+            </div>
         </div>
     </div>
 </template>

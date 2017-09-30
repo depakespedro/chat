@@ -25,7 +25,6 @@ const app = new Vue({
     data:{
         messages:[],
         usersOnline: [],
-        userCurrent: '',
     },
 
     created(){
@@ -47,22 +46,19 @@ const app = new Vue({
         },
 
         initEcho: function(){
-            Echo.private('chat-room')
+            Echo.channel('chat-room')
                 .listen('MessageCreated', (e) => {
                     this.updateMessages();
                 });
 
             Echo.join('chat-room-presence')
                 .here(users => {
-                    console.log('HERE');
                     this.usersOnline = users;
                 })
                 .joining(user => {
-                    console.log('JOIN');
                     this.usersOnline.push(user);
                 })
                 .leaving(user => {
-                    console.log('LEAV');
                     this.usersOnline = this.usersOnline.filter(u => u != user);
                 });
         }

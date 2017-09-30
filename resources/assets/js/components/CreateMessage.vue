@@ -1,7 +1,13 @@
 <template>
-    <div>
-        <input type="text" placeholder="Введите сообщение" v-model="textMessage"/>
-        <button @click="createMessage()">Отправить</button>
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите сообщение" v-model="textMessage" aria-label="Введите никнейм">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" @click="createMessage()">Отправить!</button>
+                </span>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Session as SessionModel;
 use App\Events\UpdatedUsersOnline;
+use Illuminate\Support\Facades\Log;
 
 
 class UserRepository implements UserContract

@@ -1,10 +1,13 @@
 <template>
-    <div>
-        <input type="text" placeholder="Введите никнейм" v-model="nickName"/>
-        <button @click="logged()">Войти</button>
-        <button @click="logout()">Выйти</button>
-        <div>
-            {{ authUser }} - авторизован
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите никнейм" aria-label="Введите никнейм" v-model="nickName">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" @click="logged()">Войти!</button>
+                    <button class="btn btn-secondary" type="button" @click="logout()">Выйти!</button>
+                </span>
+            </div>
         </div>
     </div>
 </template>
@@ -18,8 +21,6 @@
             }
         },
 
-        props:['userCurrent'],
-
         methods:{
             logged: function(){
                 axios.get('/auth/register/'+this.nickName)
@@ -29,17 +30,17 @@
                             .then(responce => {
                                 this.$emit('logged', {});
                                 this.authUser = this.nickName;
-                                alert(responce.data);
+                                alert('logged');
                             })
                             .catch(error => {
                                 this.authUser = '';
-                                alert(error.data)
+                                alert('no logged')
                             })
 
                     })
                     .catch(error => {
                         this.authUser = '';
-                        alert(error.data);
+                        alert('error register new user');
                     })
             },
 

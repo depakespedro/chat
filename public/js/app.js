@@ -1206,8 +1206,7 @@ var app = new Vue({
     el: '#app',
     data: {
         messages: [],
-        usersOnline: [],
-        userCurrent: ''
+        usersOnline: []
     },
 
     created: function created() {
@@ -1234,18 +1233,15 @@ var app = new Vue({
         initEcho: function initEcho() {
             var _this2 = this;
 
-            Echo.private('chat-room').listen('MessageCreated', function (e) {
+            Echo.channel('chat-room').listen('MessageCreated', function (e) {
                 _this2.updateMessages();
             });
 
             Echo.join('chat-room-presence').here(function (users) {
-                console.log('HERE');
                 _this2.usersOnline = users;
             }).joining(function (user) {
-                console.log('JOIN');
                 _this2.usersOnline.push(user);
             }).leaving(function (user) {
-                console.log('LEAV');
                 _this2.usersOnline = _this2.usersOnline.filter(function (u) {
                     return u != user;
                 });
@@ -47399,7 +47395,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47452,6 +47448,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['messages']
@@ -47469,9 +47467,11 @@ var render = function() {
     "div",
     _vm._l(_vm.messages, function(message) {
       return _c("div", [
-        _c("p", [_vm._v("Сообщение: " + _vm._s(message.text))]),
-        _vm._v(" "),
-        _c("small", [_vm._v("Автор: " + _vm._s(message.user.name))])
+        _c("div", { staticClass: "p-3 mb-2 bg-info text-white" }, [
+          _c("small", [_vm._v("Автор: " + _vm._s(message.user.name))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(message.text))])
+        ])
       ])
     })
   )
@@ -47571,7 +47571,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47582,6 +47582,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47623,39 +47629,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.textMessage,
-          expression: "textMessage"
-        }
-      ],
-      attrs: { type: "text", placeholder: "Введите сообщение" },
-      domProps: { value: _vm.textMessage },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "input-group" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.textMessage,
+              expression: "textMessage"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            placeholder: "Введите сообщение",
+            "aria-label": "Введите никнейм"
+          },
+          domProps: { value: _vm.textMessage },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.textMessage = $event.target.value
+            }
           }
-          _vm.textMessage = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            _vm.createMessage()
-          }
-        }
-      },
-      [_vm._v("Отправить")]
-    )
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "input-group-btn" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.createMessage()
+                }
+              }
+            },
+            [_vm._v("Отправить!")]
+          )
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -47728,6 +47747,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ["users"]
@@ -47741,12 +47767,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    _vm._l(_vm.users, function(user) {
-      return _c("div", [_vm._v("\n        " + _vm._s(user.name) + "\n    ")])
-    })
-  )
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col" }, [
+      _c(
+        "ul",
+        { staticClass: "list-group" },
+        [
+          _c("li", { staticClass: "list-group-item" }, [_vm._v("Онлайн:")]),
+          _vm._v(" "),
+          _vm._l(_vm.users, function(user) {
+            return _c("li", { staticClass: "list-group-item" }, [
+              _vm._v(_vm._s(user.name))
+            ])
+          })
+        ],
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47843,7 +47881,7 @@ exports = module.exports = __webpack_require__(3)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47865,6 +47903,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47875,8 +47916,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    props: ['userCurrent'],
-
     methods: {
         logged: function logged() {
             var _this = this;
@@ -47886,14 +47925,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 axios.get('/auth/login/' + _this.nickName).then(function (responce) {
                     _this.$emit('logged', {});
                     _this.authUser = _this.nickName;
-                    alert(responce.data);
+                    alert('logged');
                 }).catch(function (error) {
                     _this.authUser = '';
-                    alert(error.data);
+                    alert('no logged');
                 });
             }).catch(function (error) {
                 _this.authUser = '';
-                alert(error.data);
+                alert('error register new user');
             });
         },
 
@@ -47918,54 +47957,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.nickName,
-          expression: "nickName"
-        }
-      ],
-      attrs: { type: "text", placeholder: "Введите никнейм" },
-      domProps: { value: _vm.nickName },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "input-group" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.nickName,
+              expression: "nickName"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            placeholder: "Введите никнейм",
+            "aria-label": "Введите никнейм"
+          },
+          domProps: { value: _vm.nickName },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.nickName = $event.target.value
+            }
           }
-          _vm.nickName = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            _vm.logged()
-          }
-        }
-      },
-      [_vm._v("Войти")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        on: {
-          click: function($event) {
-            _vm.logout()
-          }
-        }
-      },
-      [_vm._v("Выйти")]
-    ),
-    _vm._v(" "),
-    _c("div", [
-      _vm._v("\n        " + _vm._s(_vm.authUser) + " - авторизован\n    ")
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "input-group-btn" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.logged()
+                }
+              }
+            },
+            [_vm._v("Войти!")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.logout()
+                }
+              }
+            },
+            [_vm._v("Выйти!")]
+          )
+        ])
+      ])
     ])
   ])
 }

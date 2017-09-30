@@ -21,18 +21,18 @@ class AuthUserController extends Controller
     public function login(User $user)
     {
         if (user()->login($user)) {
-            return 'login';
+            return response('logged', 200);
         } else {
-            return 'no login';
+            return response('no logged', 400);
         }
     }
 
     public function logout()
     {
         if (user()->logout()) {
-            return 'logout';
+            return response('logout', 200);
         } else {
-            return 'no logout';
+            return response('no logout', 400);
         }
     }
 
