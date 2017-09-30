@@ -22,3 +22,7 @@ Broadcast::channel('chat-room', function ($user) {
 Broadcast::channel('chat-room-presence', function ($user) {
     return $user;
 });
+
+Broadcast::channel('presence-chat-room-presence', function ($user) {
+    return $user;
+});

@@ -1240,6 +1240,7 @@ var app = new Vue({
             Echo.join('chat-room-presence').here(function (users) {
                 _this2.usersOnline = users;
             }).joining(function (user) {
+                console.log('join');
                 _this2.usersOnline.push(user);
             }).leaving(function (user) {
                 _this2.usersOnline = _this2.usersOnline.filter(function (u) {

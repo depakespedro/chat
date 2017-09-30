@@ -7,17 +7,22 @@ use App\Message;
 
 class MessageRepository implements MessageContract
 {
-    public function create( \App\User $user, $text)
+    public function create(\App\User $user, $text)
     {
-        try{
+        try {
             $message = Message::create([
                 'user_id' => $user->id,
                 'text' => $text,
             ]);
 
             return $message;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function all($count = 100)
+    {
+        return Message::orderBy('created_at', 'desc')->take($count)->get();
     }
 }

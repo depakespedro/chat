@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageCreated;
-use App\Events\UpdatedUsersOnline;
-use App\Message;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+
 
 class AuthUserController extends Controller
 {
@@ -21,7 +17,7 @@ class AuthUserController extends Controller
     public function login(User $user)
     {
         if (user()->login($user)) {
-            return response('logged', 200);
+            return $user;
         } else {
             return response('no logged', 400);
         }

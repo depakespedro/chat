@@ -56,6 +56,7 @@ const app = new Vue({
                     this.usersOnline = users;
                 })
                 .joining(user => {
+                console.log('join');
                     this.usersOnline.push(user);
                 })
                 .leaving(user => {
