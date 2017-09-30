@@ -10,4 +10,6 @@ interface UserContract
     public function login(User $user);
 
     public function logout(User $user = null);
+
+    public function online();
 }

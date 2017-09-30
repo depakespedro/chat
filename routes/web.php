@@ -15,8 +15,11 @@ Route::get('/', 'IndexController@index');
 Route::get('/message/{text}', 'MessageController@store')->middleware('auth');
 Route::get('/messages', 'MessageController@all');
 
-Route::get('/auth/login/{name}', 'AuthUserController@login');
+Route::get('/auth/login/{user}', 'AuthUserController@login');
+Route::get('/auth/register/{name}', 'AuthUserController@register');
 Route::get('/auth/logout', 'AuthUserController@logout');
+
+Route::get('/auth/users/online', 'AuthUserController@usersOnline');
 
 Route::post('/event', 'AuthUserController@event');
 

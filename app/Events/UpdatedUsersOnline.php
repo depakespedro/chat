@@ -2,30 +2,27 @@
 
 namespace App\Events;
 
-use App\Message;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class MessageCreated implements ShouldBroadcastNow
+class UpdatedUsersOnline implements ShouldBroadcastNow
 {
     use Dispatchable,InteractsWithSockets,SerializesModels;
 
-    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct()
     {
-        $this->message = $message;
+
     }
 
     /**

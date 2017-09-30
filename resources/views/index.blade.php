@@ -14,12 +14,10 @@
     <body>
         <div id="app">
             <table cellspacing="0">
-                <tr>
-                    <th><listmessages :messages="messages"></listmessages></th>
-                    <th><createmessage v-on:sendmessageevent="updateMessages"></createmessage></th>
-                    <th><listusersonline :users="usersOnline"></listusersonline></th>
-                    <th><login></login></th>
-                </tr>
+                <tr><th><login v-on:logged="initEcho" v-on:logout="logoutUser" :userCurrent="userCurrent"></login></th></tr>
+                <tr><th><listusersonline :users="usersOnline"></listusersonline></th></tr>
+                <tr><th><createmessage v-on:sendmessageevent="updateMessages"></createmessage></th></tr>
+                <tr><th><listmessages :messages="messages"></listmessages></th></tr>
             </table>
 
         </div>

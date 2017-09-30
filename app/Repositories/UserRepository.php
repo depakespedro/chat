@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Session as SessionModel;
+use App\Events\UpdatedUsersOnline;
 
 
 class UserRepository implements UserContract
@@ -34,6 +35,8 @@ class UserRepository implements UserContract
                 $user->onOnline();
                 $user->updatedTimeOnline();
 
+//                event(new UpdatedUsersOnline());
+
                 return true;
             }
 
@@ -46,11 +49,11 @@ class UserRepository implements UserContract
 
     public function logout(User $user = null)
     {
-        try{
-            if(is_null($user)){
+        try {
+            if (is_null($user)) {
                 $user = Auth::user();
 
-                if(is_null($user)){
+                if (is_null($user)) {
                     return false;
                 }
             }
@@ -59,9 +62,16 @@ class UserRepository implements UserContract
             $user->offOnline();
             $user->updatedTimeOnline();
 
+//            event(new UpdatedUsersOnline());
+
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function online()
+    {
+        return User::where('online', true)->get();
     }
 }

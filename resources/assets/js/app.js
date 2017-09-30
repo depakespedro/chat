@@ -24,35 +24,47 @@ const app = new Vue({
     el: '#app',
     data:{
         messages:[],
-        usersOnline: []
+        usersOnline: [],
+        userCurrent: '',
     },
 
     created(){
         this.updateMessages();
-
-        Echo.join('chat-room-1')
-            .listen('MessageCreated', (e) => {
-                this.updateMessages();
-            })
-            .here((users) => {
-                this.usersOnline = users;
-            })
-            .joining((user)=>{
-                this.usersOnline.push(user);
-            })
-            .leaving((user)=>{
-                this.usersOnline = this.usersOnline.filter(u => u != user);
-            });
-
-        console.log('Echo init');
     },
 
     methods:{
         updateMessages: function () {
             console.log('updateMEssages');
             axios.get('/messages').then(responce => {
-                this.messages = responce.data;
+                this.messages = responce.data.reverse();
             });
+        },
+
+        logoutUser: function () {
+            console.log('logoutUser');
+            Echo.leave('chat-room-presence');
+            Echo.leave('chat-room');
+        },
+
+        initEcho: function(){
+            Echo.private('chat-room')
+                .listen('MessageCreated', (e) => {
+                    this.updateMessages();
+                });
+
+            Echo.join('chat-room-presence')
+                .here(users => {
+                    console.log('HERE');
+                    this.usersOnline = users;
+                })
+                .joining(user => {
+                    console.log('JOIN');
+                    this.usersOnline.push(user);
+                })
+                .leaving(user => {
+                    console.log('LEAV');
+                    this.usersOnline = this.usersOnline.filter(u => u != user);
+                });
         }
-    },
+    }
 });

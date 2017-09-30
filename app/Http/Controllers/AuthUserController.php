@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageCreated;
+use App\Events\UpdatedUsersOnline;
 use App\Message;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,14 +12,14 @@ use Illuminate\Support\Facades\Log;
 
 class AuthUserController extends Controller
 {
-    public function login($name)
+    public function register($name)
     {
-        $user = User::where('name', '=', $name)->first();
+        $user = user()->create($name);
+        return $user;
+    }
 
-        if (is_null($user)) {
-            $user = user()->create($name);
-        }
-
+    public function login(User $user)
+    {
         if (user()->login($user)) {
             return 'login';
         } else {
@@ -37,15 +38,22 @@ class AuthUserController extends Controller
 
     public function event(Request $request)
     {
-
         $events = $request->get('events');
 
         $userId = $events[0]['user_id'];
+        $event = $events[0]['name'];
 
-        $user = User::find($userId);
+        if($event == 'member_removed'){
+            $user = User::find($userId);
 
-        user()->logout($user);
+            user()->logout($user);
+        }
 
         return response('ok', 200);
+    }
+
+    public function usersOnline()
+    {
+        return user()->online();
     }
 }
