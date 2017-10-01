@@ -6,10 +6,7 @@ namespace App\Repositories;
 use App\Contracts\UserContract;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
-use App\Session as SessionModel;
-use App\Events\UpdatedUsersOnline;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Session\Store as Session;
 
 
 class UserRepository implements UserContract
@@ -36,8 +33,6 @@ class UserRepository implements UserContract
                 $user->onOnline();
                 $user->updatedTimeOnline();
 
-//                event(new UpdatedUsersOnline());
-
                 return true;
             }
 
@@ -48,22 +43,17 @@ class UserRepository implements UserContract
         return false;
     }
 
-    public function logout(User $user = null)
+    public function logout(Session $session)
     {
         try {
-            if (is_null($user)) {
-                $user = Auth::user();
 
-                if (is_null($user)) {
-                    return false;
-                }
-            }
+            $user = Auth::user();
 
-            SessionModel::User($user)->delete();
+            Auth::guard()->logout();
+            $session->invalidate();
+
             $user->offOnline();
             $user->updatedTimeOnline();
-
-//            event(new UpdatedUsersOnline());
 
             return true;
         } catch (\Exception $e) {

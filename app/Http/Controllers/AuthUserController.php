@@ -23,9 +23,9 @@ class AuthUserController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        if (user()->logout()) {
+        if (user()->logout($request->session())) {
             return response('logout', 200);
         } else {
             return response('no logout', 400);

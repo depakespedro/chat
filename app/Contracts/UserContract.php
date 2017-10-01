@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 use App\User;
+use Illuminate\Session\Store as Session;
 
 interface UserContract
 {
@@ -9,7 +10,7 @@ interface UserContract
 
     public function login(User $user);
 
-    public function logout(User $user = null);
+    public function logout(Session $request);
 
     public function online();
 }

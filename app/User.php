@@ -19,7 +19,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'online',
-        'last_updated_at'
     ];
 
     /**
@@ -28,6 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'last_updated_at',
         'remember_token',
     ];
 
